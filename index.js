@@ -8,9 +8,29 @@ tweetBtn.addEventListener('click',function(){
 })
 
 document.addEventListener('click',function(e){
-    console.log(e.target.dataset.like);
-    console.log(e.target.dataset.retweet);
+    if(e.target.dataset.like){
+        handleLikeClick(e.target.dataset.like);
+    }
 })
+
+function handleLikeClick(tweetId){
+    /*
+    tweetsData.forEach(function(id){
+         if(id.uuid===tweetId){
+            const targetTweetObj =id;
+            targetTweetObj.likes+=1;
+            console.log(targetTweetObj.likes);
+         }
+    })
+    */
+
+    const targetTweetObj = tweetsData.filter(function(tweet){
+        return tweet.uuid == tweetId;
+    })[0]; //Needed bc the filter method returns an array of objects, but we have only one, so just take the  0 position of it 
+
+    targetTweetObj.likes++;
+    render();
+}
 
 function getFeedHtml(){
     let feedHtml ="";
