@@ -1,16 +1,21 @@
 import {tweetsData} from "./data.js";
 
-const tweetInput = document.getElementById("tweet-input")
+const tweetInput = document.getElementById("tweet-input");
 const tweetBtn = document.getElementById("tweet-btn");
 
 tweetBtn.addEventListener('click',function(){
     console.log(tweetInput.value);
 })
 
+document.addEventListener('click',function(e){
+    console.log(e.target.dataset.like);
+    console.log(e.target.dataset.retweet);
+})
+
 function getFeedHtml(){
     let feedHtml ="";
 
-    for(let tweet of tweetsData){
+    tweetsData.forEach(function(tweet){
     feedHtml+=`
     <div class="tweet">
         <div class="tweet-inner">
@@ -20,21 +25,27 @@ function getFeedHtml(){
             <p class="tweet-text">${tweet.tweetText}</p>
             <div class="tweet-details">
                 <span class="tweet-detail">
+                    <i class="fa-regular fa-comment-dots" data-reply="${tweet.uuid}"></i>
                     ${tweet.replies.length}
                 </span>
                 <span class="tweet-detail">
+                <i class="fa-solid fa-heart" data-like="${tweet.uuid}"></i>
                     ${tweet.likes}
                 </span>
                 <span class="tweet-detail">
+                <i class="fa-solid fa-retweet" data-retweet="${tweet.uuid}"></i>
                     ${tweet.retweets}
                 </span>
             </div>   
         </div>            
     </div
         `
-    }
+    })
 
-    console.log(feedHtml);
+    return feedHtml;
 }
 
-getFeedHtml();
+function render(){
+    document.getElementById("feed").innerHTML=getFeedHtml();
+}render();
+
