@@ -6,6 +6,10 @@ html, body {
 
 /* typography and icons */
 
+img{
+    user-select: none;
+}
+
 h1{
     color: #0F8CDF;
     margin-bottom: 10px;
